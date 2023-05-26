@@ -1,14 +1,14 @@
 package com.example.notekeeper
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import android.view.Menu
-import android.view.MenuItem
 import com.example.notekeeper.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -24,14 +24,12 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-        appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        val dataManager = DataManager()
+        val coursesAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, dataManager.courses.values.toList())
+        coursesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
+        val spinner = findViewById<Spinner>(R.id.coursesSpinner)
+        spinner.adapter = coursesAdapter
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

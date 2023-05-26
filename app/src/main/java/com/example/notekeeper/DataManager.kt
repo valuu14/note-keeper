@@ -4,8 +4,8 @@ import com.example.notekeeper.domain.Course
 import com.example.notekeeper.domain.Note
 
 class DataManager {
-    private val courses = HashMap<String, Course>()
-    private val notes = ArrayList<Note>()
+    val courses = HashMap<String, Course>()
+    val notes = ArrayList<Note>()
 
     init {
         initializeCourses()
