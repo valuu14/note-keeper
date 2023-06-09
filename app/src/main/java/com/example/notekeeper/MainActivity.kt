@@ -16,7 +16,6 @@ import com.example.notekeeper.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private var notePosition = POSITION_NOT_SET
-    private val coursesSpinner = findViewById<Spinner>(R.id.coursesSpinner)
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
@@ -32,17 +31,18 @@ class MainActivity : AppCompatActivity() {
         val coursesAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, DataManager.courses.values.toList())
         coursesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
+        val coursesSpinner = findViewById<Spinner>(R.id.coursesSpinner)
         coursesSpinner.adapter = coursesAdapter
 
         //access the data sent from another activity
         notePosition = intent.getIntExtra(EXTRA_NOTE_POSITION, POSITION_NOT_SET)
 
         if (notePosition != POSITION_NOT_SET) {
-            displayNote()
+            displayNote(coursesSpinner)
         }
     }
 
-    private fun displayNote() {
+    private fun displayNote(coursesSpinner: Spinner) {
         val note = DataManager.notes[notePosition]
         val title = findViewById<EditText>(R.id.titleText)
         val text = findViewById<EditText>(R.id.noteText)
