@@ -4,14 +4,19 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
+import com.example.notekeeper.constants.EXTRA_NOTE_POSITION
+import com.example.notekeeper.constants.POSITION_NOT_SET
 import com.example.notekeeper.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+    private var notePosition = POSITION_NOT_SET
+    private val coursesSpinner = findViewById<Spinner>(R.id.coursesSpinner)
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
@@ -24,12 +29,29 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
-        val dataManager = DataManager()
-        val coursesAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, dataManager.courses.values.toList())
+        val coursesAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, DataManager.courses.values.toList())
         coursesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
-        val spinner = findViewById<Spinner>(R.id.coursesSpinner)
-        spinner.adapter = coursesAdapter
+        coursesSpinner.adapter = coursesAdapter
+
+        //access the data sent from another activity
+        notePosition = intent.getIntExtra(EXTRA_NOTE_POSITION, POSITION_NOT_SET)
+
+        if (notePosition != POSITION_NOT_SET) {
+            displayNote()
+        }
+    }
+
+    private fun displayNote() {
+        val note = DataManager.notes[notePosition]
+        val title = findViewById<EditText>(R.id.titleText)
+        val text = findViewById<EditText>(R.id.noteText)
+
+        title.setText(note.title)
+        text.setText(note.text)
+
+        val coursePosition = DataManager.courses.values.indexOf(note.course)
+        coursesSpinner.setSelection(coursePosition)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

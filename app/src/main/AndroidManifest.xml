@@ -12,9 +12,9 @@
             android:theme="@style/Theme.NoteKeeper"
             tools:targetApi="31">
         <activity
-                android:name=".MainActivity"
-                android:exported="true"
-                android:theme="@style/Theme.NoteKeeper.NoActionBar">
+                android:name=".NotesList"
+                android:label="@string/list_notes"
+                android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -22,14 +22,14 @@
             </intent-filter>
         </activity>
         <activity
+                android:name=".MainActivity"
+                android:exported="true"
+                android:theme="@style/Theme.NoteKeeper.NoActionBar">
+        </activity>
+        <activity
                 android:name=".EditNotesActivity"
                 android:exported="true"
-                android:label="@string/list_notes">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN"/>-->
-
-<!--                <category android:name="android.intent.category.LAUNCHER"/>-->
-<!--            </intent-filter>-->
+                android:label="@string/edit_notes">
         </activity>
     </application>
 
