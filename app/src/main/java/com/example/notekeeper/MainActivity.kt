@@ -13,6 +13,7 @@ import androidx.navigation.ui.navigateUp
 import com.example.notekeeper.constants.EXTRA_NOTE_POSITION
 import com.example.notekeeper.constants.POSITION_NOT_SET
 import com.example.notekeeper.databinding.ActivityMainBinding
+import com.example.notekeeper.domain.Course
 
 class MainActivity : AppCompatActivity() {
     private var notePosition = POSITION_NOT_SET
@@ -97,5 +98,17 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        saveNote()
+    }
+
+    private fun saveNote() {
+        val note = DataManager.notes[notePosition]
+        note.title = findViewById<EditText>(R.id.titleText).text.toString()
+        note.text = findViewById<EditText>(R.id.noteText).text.toString()
+        note.course = findViewById<Spinner>(R.id.coursesSpinner).selectedItem as Course
     }
 }
