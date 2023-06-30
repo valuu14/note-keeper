@@ -14,6 +14,7 @@ import com.example.notekeeper.constants.EXTRA_NOTE_POSITION
 import com.example.notekeeper.constants.POSITION_NOT_SET
 import com.example.notekeeper.databinding.ActivityMainBinding
 import com.example.notekeeper.domain.Course
+import com.example.notekeeper.domain.Note
 
 class MainActivity : AppCompatActivity() {
     private var notePosition = POSITION_NOT_SET
@@ -40,6 +41,9 @@ class MainActivity : AppCompatActivity() {
 
         if (notePosition != POSITION_NOT_SET) {
             displayNote(coursesSpinner)
+        } else {
+            DataManager.notes.add(Note())
+            notePosition = DataManager.notes.lastIndex
         }
     }
 

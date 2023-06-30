@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import com.example.notekeeper.constants.EXTRA_NOTE_POSITION
+import com.example.notekeeper.domain.Note
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class NotesList : AppCompatActivity() {
@@ -27,5 +28,11 @@ class NotesList : AppCompatActivity() {
             activityIntent.putExtra(EXTRA_NOTE_POSITION, position)
             startActivity(activityIntent)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val notesList = findViewById<ListView>(R.id.notesListView)
+        (notesList.adapter as ArrayAdapter<*>).notifyDataSetChanged()
     }
 }

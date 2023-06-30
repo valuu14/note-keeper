@@ -6,7 +6,7 @@ data class Course (val id: String, val title: String) {
     }
 }
 
-data class Note (var course: Course, var title: String, var text: String) {
+data class Note (var course: Course? = null, var title: String? = null, var text: String? = null) {
     override fun toString(): String {
         return "$title\n$text"
     }
