@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
-import com.example.notekeeper.constants.EXTRA_NOTE_POSITION
+import com.example.notekeeper.constants.NOTE_POSITION
 import com.example.notekeeper.constants.POSITION_NOT_SET
 import com.example.notekeeper.databinding.ActivityMainBinding
 import com.example.notekeeper.domain.Course
@@ -37,7 +37,8 @@ class MainActivity : AppCompatActivity() {
         coursesSpinner.adapter = coursesAdapter
 
         //access the data sent from another activity
-        notePosition = intent.getIntExtra(EXTRA_NOTE_POSITION, POSITION_NOT_SET)
+        notePosition = savedInstanceState?.getInt(NOTE_POSITION, POSITION_NOT_SET) ?:
+            intent.getIntExtra(NOTE_POSITION, POSITION_NOT_SET)
 
         if (notePosition != POSITION_NOT_SET) {
             displayNote(coursesSpinner)
@@ -45,6 +46,12 @@ class MainActivity : AppCompatActivity() {
             DataManager.notes.add(Note())
             notePosition = DataManager.notes.lastIndex
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        outState.putInt(NOTE_POSITION, notePosition)
     }
 
     private fun displayNote(coursesSpinner: Spinner) {
