@@ -1,11 +1,11 @@
 package com.example.notekeeper
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.ListView
-import com.example.notekeeper.constants.NOTE_POSITION
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.notekeeper.domain.NoteRecyclerAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class NotesList : AppCompatActivity() {
@@ -19,19 +19,15 @@ class NotesList : AppCompatActivity() {
             startActivity(activityIntent)
         }
 
-        val notesList = findViewById<ListView>(R.id.notesListView)
-        notesList.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, DataManager.notes)
+        val listItems = findViewById<RecyclerView>(R.id.listItems)
+        listItems.layoutManager = LinearLayoutManager(this);
 
-        notesList.setOnItemClickListener {parent, view, position, id ->
-            val activityIntent = Intent(this, MainActivity::class.java)
-            activityIntent.putExtra(NOTE_POSITION, position)
-            startActivity(activityIntent)
-        }
+        listItems.adapter = NoteRecyclerAdapter(this, DataManager.notes)
     }
 
     override fun onResume() {
         super.onResume()
-        val notesList = findViewById<ListView>(R.id.notesListView)
-        (notesList.adapter as ArrayAdapter<*>).notifyDataSetChanged()
+        val listItems = findViewById<RecyclerView>(R.id.listItems)
+        listItems.adapter?.notifyDataSetChanged()
     }
 }

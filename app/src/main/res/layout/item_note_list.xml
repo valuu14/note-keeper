@@ -33,7 +33,6 @@
                     android:layout_height="wrap_content" android:id="@+id/textTitle"
                     app:layout_constraintTop_toBottomOf="@+id/textCourse" app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageView"
-                    app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="8dp"
                     android:layout_marginEnd="8dp" android:layout_marginTop="16dp" android:layout_marginStart="8dp"
             />
         </androidx.constraintlayout.widget.ConstraintLayout>
